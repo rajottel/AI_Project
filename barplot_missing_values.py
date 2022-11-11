@@ -34,12 +34,12 @@ sb.set_style(style="whitegrid")
 plt.figure(figsize=(20,10))
 
 # Bar Plot
-plot = sb.barplot(x= list(nan_count.keys())[:15],y = list(nan_count.values())[:15],palette="hls")
+plot = sb.barplot(x= list(nan_count.keys())[:15],y = list(nan_count.values())[:15],palette="Greens_d")
 
 # Add annotations above each bar signifying their value
-for p in plot.patches:
-        plot.annotate('{:.1f}%'.format(p.get_height()), (p.get_x()+0.2, p.get_height()+1))
-
-# Make y-axis more interpretable
-plot.set_yticklabels(map('{:.1f}%'.format, plot.yaxis.get_majorticklocs()))
+# for p in plot.patches:
+#         plot.annotate('{:.1f}%'.format(p.get_height()), (p.get_x()+0.2, p.get_height()+1))
+#
+# # Make y-axis more interpretable
+# plot.set_yticklabels(map('{:.1f}%'.format, plot.yaxis.get_majorticklocs()))
 print(plt.show())
