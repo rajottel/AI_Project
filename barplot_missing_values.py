@@ -5,6 +5,7 @@ from matplotlib import pyplot
 import seaborn as sb
 import sklearn
 from sklearn.preprocessing import LabelEncoder
+import numpy as np
 
 df_training = pd.read_csv("Data/aps_failure_training_set.csv")
 df_test = pd.read_csv("Data/aps_failure_test_set.csv")
@@ -12,6 +13,8 @@ df_test = pd.read_csv("Data/aps_failure_test_set.csv")
 LE = LabelEncoder()
 df_training['class'] = LE.fit_transform(df_training['class'])
 df_test['class'] = LE.fit_transform(df_test['class'])
+
+df_new = df_training.replace('na', np.nan)
 
 # count_nan = {i: list(df_training.isna().sum()*100/df_training.shape[0])[j] for j, i in enumerate(df_training.columns)}
 # count_nan = {i: n for i, n in sorted(count_nan.items(), key=lambda item: item[1], reverse=True)}
@@ -22,7 +25,7 @@ df_test['class'] = LE.fit_transform(df_test['class'])
 # barplot = sb.barplot(x=list(count_nan.keys())[:15], y=list(count_nan.values())[:15], palette="hls")
 
 # Creating a dictionary whose keys are the column names and values are the percentage of missing values
-nan_count = {k:list(df_training.isna().sum()*100/df_training.shape[0])[i] for i,k in enumerate(df_training.columns)}
+nan_count = {k:list(df_new.isna().sum()*100/df_new.shape[0])[i] for i,k in enumerate(df_new.columns)}
 
 # Sorting the dictionary in descending order based on the percentage of missing values
 nan_count = {k: v for k, v in sorted(nan_count.items(), key=lambda item: item[1],reverse=True)}
