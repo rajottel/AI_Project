@@ -6,8 +6,8 @@ import seaborn as sb
 import sklearn
 from sklearn.preprocessing import LabelEncoder
 
-df_training = pd.read_csv ("Data/aps_failure_training_set.csv")
-df_test = pd.read_csv ("Data/aps_failure_test_set.csv")
+df_training = pd.read_csv("Data/aps_failure_training_set.csv")
+df_test = pd.read_csv("Data/aps_failure_test_set.csv")
 
 LE = LabelEncoder()
 df_training['class'] = LE.fit_transform(df_training['class'])
