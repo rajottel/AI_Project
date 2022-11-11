@@ -28,10 +28,10 @@ s1mask = np.isfinite(series1)
 plt.plot(xs[s1mask], series1[s1mask], linestyle='-', marker='o')
 #plt.plot(xs[s2mask], series2[s2mask], linestyle='-', marker='o')
 
-#plt.show()
+plt.show()
 
 #sb.heatmap(df_training.corr(), annot=True)
 #plt.title("Correlation Matrix")
 #plt.show()
-df_new_2 = df_new.astype(int)
-plt.hist(df_new_2['ee_000'])
+#df_new_2 = df_new.astype(int)
+#plt.hist(df_new_2['ee_000'])
