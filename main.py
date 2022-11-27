@@ -2,22 +2,14 @@ import pandas as pd
 import numpy as np
 from skimpy import skim
 
-# import matplotlib.pyplot as plt
-# from scipy.stats import norm, binom
-# import seaborn as sns
-# from autoimpute.utils import md_pattern, proportions
-# from autoimpute.visuals import plot_md_locations, plot_md_percent
-# from autoimpute.visuals import plot_imp_dists, plot_imp_boxplots
-# from autoimpute.visuals import plot_imp_swarm
-# from autoimpute.imputations import MultipleImputer, MiceImputer
-
 train_data = pd.read_csv("data/aps_failure_training_set.csv", na_values="na")
 print("Training Dataset Head:")
 print(train_data.head())
 
-# test_data = pd.read_csv("data/aps_failure_test_set.csv", na_values="na")
-# print("\nTest Dataset Head:")
-# print(test_data.head())
+test_data = pd.read_csv("data/aps_failure_test_set.csv", na_values="na")
+print("\nTest Dataset Head:")
+print(test_data.head())
+skim(train_data)
 
 # drop class feature
 train_data1 = train_data.drop(columns='class')
@@ -29,6 +21,8 @@ for i in train_data1.columns:
     if train_info[i]['std'] == 0:
         singlevalue_features.append(i)
 train_data1 = train_data.drop(columns=singlevalue_features)
+skim(train_data1)
+# here
 print("Single value features dropped from dataset:", singlevalue_features)
 
 # print("\nAppended Train Dataset shape:")
@@ -53,13 +47,28 @@ print("\nThe features being removed are those with over 60% of data missing, whi
 # less than 10% missing data
 # from https://www.plus2net.com/python/pandas-dataframe-dropna-thresh.php
 na_10_percent = {k for k, v in train_na_count.items() if v < 10}
-train_data2 = train_data1.dropna(axis=1, thresh=train_data1.shape[0] * 0.6)
+na_list = list(dropped_features.keys())
+removed_features = na_list + singlevalue_features
+print(removed_features)
+print(na_list)
+train_data2 = train_data1.drop(na_list, axis=1)
+# here
+# skim(train_data2)
 train_data3 = train_data2.dropna(subset=na_10_percent)
+# skim(train_data3)
 
 print("\nShape of training dataset with rows that have NA entries in features with less than 10% missing data removed: ")
 print(train_data3.shape)
 print("head of new training dataset:")
 print(train_data3.head())
 
-train_data3.to_csv('data/aps_failure_training_modified.csv')
+# remove features from test dataset
+test_data1 = test_data.drop(removed_features, axis=1)
+print(test_data.shape)
+print(test_data1.shape)
+print(train_data.shape)
+print(train_data2.shape)
+
+test_data1.to_csv('data/aps_failure_test_modified.csv', index=False)
+train_data3.to_csv('data/aps_failure_training_modified.csv', index=False)
 
