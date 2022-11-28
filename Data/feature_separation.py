@@ -1,10 +1,7 @@
 import pandas as pd
 import numpy as np
-from collections import Counter
 import seaborn as sb
 import matplotlib.pyplot as plt
-#from skimpy import skim
-#from sklearn.impute import KNNImputer
 
 dataframe = pd.read_csv("aps_failure_training_imputed.csv")
 count = 0
@@ -19,8 +16,6 @@ for j in list_of_indicators:
     i += 1
 print(list_of_indicators)
 print(count_first)
-#print(sorted(set(first)))
 plt.figure(figsize=(24,5))
 sb.barplot(x=list_of_indicators, y=count_first, color="green")
 plt.show()
-#print(dataframe.head())
