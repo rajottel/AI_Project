@@ -51,4 +51,6 @@ for j in index70F:
     Hist70Features.append(column_names[j])
 print("These are the the histogram and bins: ", Hist70Features)
 
-# imputed_histogram =
+#I am not sure about this one
+imputed_histogram = dataframe[Hist70Features]
+train_x_no_histogram = dataframe.drop(Hist70Features, axis=1)
