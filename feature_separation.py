@@ -3,10 +3,9 @@ import numpy as np
 import seaborn as sb
 import matplotlib.pyplot as plt
 
-# This part of the code gives a plot of each identifiers and how many bins they have
+# This part of the code gives a plot of each identifier and how many bins they have
 dataframe = pd.read_csv("aps_failure_training_imputed.csv")
 count = 0
-first = []
 first = dataframe.columns.str.split('_').str[0].tolist()
 first.pop(0)
 column_names = dataframe.columns.tolist()
@@ -35,7 +34,7 @@ for j in count_first:
 HistIdenWith10Bins = []
 for j in BinsHist:
     HistIdenWith10Bins.append(list_of_indicators[j])
-print("These are the indicators with 10 bins each: ",HistIdenWith10Bins)
+print("These are the indicators with 10 bins each: ", HistIdenWith10Bins)
 
 Hist70Features = []
 index70F = []
@@ -51,6 +50,6 @@ for j in index70F:
     Hist70Features.append(column_names[j])
 print("These are the the histogram and bins: ", Hist70Features)
 
-#I am not sure about this one
-imputed_histogram = dataframe[Hist70Features]
+# I am not sure about this one
+imputed_x_histogram = dataframe[Hist70Features]
 train_x_no_histogram = dataframe.drop(Hist70Features, axis=1)
