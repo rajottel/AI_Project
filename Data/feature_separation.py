@@ -9,23 +9,27 @@ import matplotlib.pyplot as plt
 dataframe = pd.read_csv("aps_failure_training_imputed.csv")
 count = 0
 first = []
-first = dataframe.columns.str.split('_').tolist()
-i=0
-count_first = []
-for col in dataframe.columns:
-    #if col.startswith(first[i]):
-        #count += 1
-    count = Counter(first)
-    #else:
-        #count_first.append(count)
-        #i += 1
-        #count = 0
-
+first = dataframe.columns.str.split('_').str[0].tolist()
 first.pop(0)
+list_of_indicators =sorted(set(first))
+count = Counter(first)
+# i=0
+# count_first = []
+# for col in dataframe.columns:
+#     if col.startswith(first[i]):
+#         count += 1
+#     #count = Counter(first)
+#     else:
+#         count_first.append(count)
+#         i += 1
+#         count = 1
+
+
 #dataframe.columns.str
-print(first)
-print(list(count.values()))
+# print(first)
+# print(count_first)
+print(sorted(set(first)))
 plt.figure(figsize=(24,5))
-sb.barplot(x=first, y=list(count.values()))
+sb.barplot(x=list_of_indicators, y=list(count.values()))
 plt.show()
 #print(dataframe.head())
