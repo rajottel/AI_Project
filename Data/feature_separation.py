@@ -12,24 +12,15 @@ first = []
 first = dataframe.columns.str.split('_').str[0].tolist()
 first.pop(0)
 list_of_indicators =sorted(set(first))
-count = Counter(first)
-# i=0
-# count_first = []
-# for col in dataframe.columns:
-#     if col.startswith(first[i]):
-#         count += 1
-#     #count = Counter(first)
-#     else:
-#         count_first.append(count)
-#         i += 1
-#         count = 1
-
-
-#dataframe.columns.str
-# print(first)
-# print(count_first)
-print(sorted(set(first)))
+i=0
+count_first = []
+for j in list_of_indicators:
+    count_first.append(first.count(list_of_indicators[i]))
+    i += 1
+print(list_of_indicators)
+print(count_first)
+#print(sorted(set(first)))
 plt.figure(figsize=(24,5))
-sb.barplot(x=list_of_indicators, y=list(count.values()), color="green")
+sb.barplot(x=list_of_indicators, y=count_first, color="green")
 plt.show()
 #print(dataframe.head())
