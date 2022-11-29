@@ -7,19 +7,20 @@ import matplotlib.pyplot as plt
 og_dataframe = pd.read_csv("Data/aps_failure_training_set.csv")
 dataframe = pd.read_csv("Data/aps_failure_training_imputed.csv")
 count = 0
+# Reference from https://stackoverflow.com/questions/29947574/splitting-at-underscore-in-python-and-storing-the-first-value
 first = dataframe.columns.str.split('_').str[0].tolist()
 first.pop(0)
 column_names = dataframe.columns.tolist()
 column_names.pop(0)
 list_of_indicators = sorted(set(first))
-i=0
+i = 0
 count_first = []
 for j in list_of_indicators:
     count_first.append(first.count(list_of_indicators[i]))
     i += 1
 print(list_of_indicators)
 print(count_first)
-plt.figure(figsize=(24,5))
+plt.figure(figsize=(24, 5))
 sb.barplot(x=list_of_indicators, y=count_first, color="green")
 plt.show()
 
@@ -40,7 +41,7 @@ print("These are the indicators with 10 bins each: ", HistIdenWith10Bins)
 Hist70Features = []
 index70F = []
 g = 0
-n=0
+n = 0
 for j in first:
     for g in HistIdenWith10Bins:
         if j == g:
@@ -67,7 +68,18 @@ train_x_no_histogram = imputed_x_data.drop(Hist70Features, axis=1)
 # These next steps is sorting out which Features are actually relevant. Using Recursive Feature Elimination, feature that are not important is removed
 from sklearn.feature_selection import RFE
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.feature_selection import RFE
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import RepeatedStratifiedKFold
+from sklearn.model_selection import cross_val_score
+from sklearn.pipeline import Pipeline
+from numpy import mean
+from numpy import std
+from matplotlib import pyplot
 
-rfe_selector = RFE(estimator=RandomForestClassifier(n_estimators=150,max_depth=5,random_state=1), n_features_to_select=15, verbose=5)
+rfe_selector = RFE(estimator=RandomForestClassifier(), n_features_to_select=15, verbose=5)
 rfe_selector.fit(imputed_x_histogram, train_set_y)
-top_features = train_x_no_histogram.columns[rfe_selector.get_support()]
+print(imputed_x_histogram.columns[rfe_selector.get_support()])
+
+# add this to the next code:
+# create new dataframe after feature selection that only have the features selected, and save to a new csv for processing.
