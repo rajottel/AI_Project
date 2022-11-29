@@ -34,7 +34,7 @@ print("Accuracy:", metrics.accuracy_score(y_test, y_pred))
 print("Precision:", metrics.precision_score(y_test, y_pred))
 print("Recall:", metrics.recall_score(y_test, y_pred))
 
-
+# random sample code from https://datatofish.com/random-rows-pandas-dataframe/
 dataset1 = dataset.sample(frac=0.15)
 print_header("Dataset after random sampling")
 print(dataset1.head())
