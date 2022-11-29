@@ -3,9 +3,15 @@ import numpy as np
 import seaborn as sb
 import matplotlib.pyplot as plt
 
+# lines 8-10 from https://kearnz.github.io/autoimpute-tutorials/
+import warnings
+warnings.filterwarnings("ignore")
+print_header = lambda msg: print(f"{msg}\n{'-'*len(msg)}")
+
 # This part of the code gives a plot of each identifier and how many bins they have
 og_dataframe = pd.read_csv("Data/aps_failure_training_set.csv")
 dataframe = pd.read_csv("Data/aps_failure_training_imputed.csv")
+test_data = pd.read_csv("Data/aps_failure_test_imputed.csv")
 count = 0
 # Reference from https://stackoverflow.com/questions/29947574/splitting-at-underscore-in-python-and-storing-the-first-value
 first = dataframe.columns.str.split('_').str[0].tolist()
@@ -18,6 +24,7 @@ count_first = []
 for j in list_of_indicators:
     count_first.append(first.count(list_of_indicators[i]))
     i += 1
+print_header("List of Indicators, and counts:")
 print(list_of_indicators)
 print(count_first)
 plt.figure(figsize=(24, 5))
@@ -79,13 +86,22 @@ from matplotlib import pyplot
 
 rfe_selector = RFE(estimator=RandomForestClassifier(n_jobs=-1), n_features_to_select=15, verbose=5)
 rfe_selector.fit(imputed_x_histogram, train_set_y)
+print_header("Top 15 Features:")
 print(imputed_x_histogram.columns[rfe_selector.get_support()])
 top_15_feature_columns = imputed_x_histogram.columns[rfe_selector.get_support()]
 dftop15 = pd.DataFrame(dataframe[top_15_feature_columns])
 dfclass = pd.DataFrame(dataframe['class'])
 top_15_features_data = dfclass.join(dftop15)
 top_15_features_data.to_csv('data/aps_failure_top_15_features_data.csv', index=False)
+print_header("Top 15 Features full training dataset")
 print(top_15_features_data)
+
+test_top15 = pd.DataFrame(test_data[top_15_feature_columns])
+test_class = pd.DataFrame(test_data['class'])
+top15_test = test_class.join(test_top15)
+print_header("Top 15 features test dataset head:")
+print(top15_test.head())
+top15_test.to_csv('Data/aps_failure_test_top15.csv')
 
 # add this to the next code:
 # create new dataframe after feature selection that only have the features selected, and save to a new csv for processing.
