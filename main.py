@@ -64,11 +64,11 @@ print(train_data3.head())
 
 # remove features from test dataset
 test_data1 = test_data.drop(removed_features, axis=1)
-print(test_data.shape)
-print(test_data1.shape)
-print(train_data.shape)
-print(train_data2.shape)
+print("Test Data prior to feature removal and row removal:", test_data.shape)
+print("Test Data after feature removal and row removal:", test_data1.shape)
+print("Training Data prior to feature removal and row removal:", train_data.shape)
+print("Training Data after feature removal and row removal:", train_data3.shape)
 
-test_data1.to_csv('data/aps_failure_test_modified.csv', index=False)
-train_data3.to_csv('data/aps_failure_training_modified.csv', index=False)
+# test_data1.to_csv('data/aps_failure_test_modified.csv', index=False)
+# train_data3.to_csv('data/aps_failure_training_modified.csv', index=False)
 
