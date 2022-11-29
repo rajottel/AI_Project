@@ -4,9 +4,12 @@ import matplotlib.pyplot as plt
 from skimpy import skim
 from sklearn.impute import KNNImputer
 from numpy import isnan
+# lines 8-10 from https://kearnz.github.io/autoimpute-tutorials/
 import warnings
 warnings.filterwarnings("ignore")
 print_header = lambda msg: print(f"{msg}\n{'-'*len(msg)}")
+
+
 # import datasets
 train_data = pd.read_csv("data/aps_failure_training_modified.csv", na_values="na")
 test_data = pd.read_csv("data/aps_failure_test_modified.csv", na_values="na")
