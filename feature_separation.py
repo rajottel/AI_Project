@@ -4,7 +4,8 @@ import seaborn as sb
 import matplotlib.pyplot as plt
 
 # This part of the code gives a plot of each identifier and how many bins they have
-dataframe = pd.read_csv("aps_failure_training_imputed.csv")
+og_dataframe = pd.read_csv("Data/aps_failure_training_set.csv")
+dataframe = pd.read_csv("Data/aps_failure_training_imputed.csv")
 count = 0
 first = dataframe.columns.str.split('_').str[0].tolist()
 first.pop(0)
@@ -50,6 +51,23 @@ for j in index70F:
     Hist70Features.append(column_names[j])
 print("These are the the histogram and bins: ", Hist70Features)
 
+# Get only x train data from the dataframe
+imputed_x_data = dataframe.drop('class', axis=1)
+
+# Get the y train from the unprocessed dataframe
+train_set_y = dataframe['class']
+
 # I am not sure about this one
-imputed_x_histogram = dataframe[Hist70Features]
-train_x_no_histogram = dataframe.drop(Hist70Features, axis=1)
+imputed_x_histogram = imputed_x_data[Hist70Features]
+train_x_no_histogram = imputed_x_data.drop(Hist70Features, axis=1)
+# print(train_x_no_histogram.shape)
+# print(imputed_x_histogram.shape)
+# print(train_set_y.shape)
+
+# These next steps is sorting out which Features are actually relevant. Using Recursive Feature Elimination, feature that are not important is removed
+from sklearn.feature_selection import RFE
+from sklearn.ensemble import RandomForestClassifier
+
+rfe_selector = RFE(estimator=RandomForestClassifier(n_estimators=150,max_depth=5,random_state=1), n_features_to_select=15, verbose=5)
+rfe_selector.fit(imputed_x_histogram, train_set_y)
+top_features = train_x_no_histogram.columns[rfe_selector.get_support()]
