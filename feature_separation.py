@@ -77,9 +77,15 @@ from numpy import mean
 from numpy import std
 from matplotlib import pyplot
 
-rfe_selector = RFE(estimator=RandomForestClassifier(), n_features_to_select=15, verbose=5)
+rfe_selector = RFE(estimator=RandomForestClassifier(n_jobs=-1), n_features_to_select=15, verbose=5)
 rfe_selector.fit(imputed_x_histogram, train_set_y)
 print(imputed_x_histogram.columns[rfe_selector.get_support()])
+top_15_feature_columns = imputed_x_histogram.columns[rfe_selector.get_support()]
+dftop15 = pd.DataFrame(dataframe[top_15_feature_columns])
+dfclass = pd.DataFrame(dataframe['class'])
+top_15_features_data = dfclass.join(dftop15)
+top_15_features_data.to_csv('data/aps_failure_top_15_features_data.csv', index=False)
+print(top_15_features_data)
 
 # add this to the next code:
 # create new dataframe after feature selection that only have the features selected, and save to a new csv for processing.
