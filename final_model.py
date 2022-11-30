@@ -147,23 +147,3 @@ plt.title('Confusion Matrix for Random Forest Classifier Model with Max Recall R
           'Detection')
 print(plt.show())
 
-
-# print_header("Results for RandomForestClassifier on full Dataset:")
-# print("Accuracy:", metrics.accuracy_score(y_test, y_prediction))
-# print("Precision:", metrics.precision_score(y_test, y_prediction))
-# print("Recall:", metrics.recall_score(y_test, y_prediction))
-
-# confusion matrix and plot code from https://medium.com/analytics-vidhya/evaluating-a-random-forest-model-9d165595ad56
-# confusion = confusion_matrix(y_test, y_prediction)
-# print("Confusion Matrix:\n", confusion)
-# plt.figure(figsize=(15, 10))
-# sb.set(font_scale=1.4)
-# sb.heatmap(confusion, annot=True, annot_kws={'size': 10}, cmap=plt.cm.Purples, linewidths=0.2)
-# class_names = ['0', '1']
-# tick_marks = np.arange(len(class_names)) + 0.5
-# plt.xticks(tick_marks, class_names)
-# plt.yticks(tick_marks, class_names)
-# plt.xlabel('Predicted label')
-# plt.ylabel('True label')
-# plt.title('Confusion Matrix for Random Forest Model APS Failure Test Dataset')
-# print(plt.show())
